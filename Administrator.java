@@ -119,6 +119,7 @@ public static void Createtable(Connection con) throws IOException {
                                  + "PRIMARY KEY (tID),"
                                     + "CHECK (tID > 0)) ";
         stmt.executeUpdate(Transaction);
+        //after created table then add constraint
         String fk_p1 = "ALTER TABLE part ADD CONSTRAINT fk_p1 FOREIGN KEY (cID) REFERENCES category (cID)";
         stmt.execute(fk_p1);
         String fk_p2 = "ALTER TABLE part ADD CONSTRAINT fk_p2 FOREIGN KEY (mID) REFERENCES manufacturer (mID)";
@@ -143,10 +144,12 @@ public static void Createtable(Connection con) throws IOException {
 public static void Deletetable(Connection con) throws IOException {
     try{
         Statement stmt = con.createStatement();
-        stmt.execute("ALTER TABLE part DROP FOREIGN KEY fk_p1");
+        //drop foreign key constraint first
+        stmt.execute("ALTER TABLE part DROP FOREIGN KEY fk_p1"); 
         stmt.execute("ALTER TABLE part DROP FOREIGN KEY fk_p2");
         stmt.execute("ALTER TABLE transaction DROP FOREIGN KEY fk_t1");
         stmt.execute("ALTER TABLE transaction DROP FOREIGN KEY fk_t2");
+        //drop table then
         String Drop = "DROP TABLE category";
         stmt.executeUpdate(Drop);
         String Drop2 = "DROP TABLE manufacturer";
