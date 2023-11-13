@@ -120,14 +120,14 @@ public static void Createtable(Connection con) throws IOException {
                                     + "CHECK (tID > 0)) ";
         stmt.executeUpdate(Transaction);
         //after created table then add constraint
-        String fk_p1 = "ALTER TABLE part ADD CONSTRAINT fk_p1 FOREIGN KEY (cID) REFERENCES category (cID)";
+        /*String fk_p1 = "ALTER TABLE part ADD CONSTRAINT fk_p1 FOREIGN KEY (cID) REFERENCES category (cID)";
         stmt.execute(fk_p1);
         String fk_p2 = "ALTER TABLE part ADD CONSTRAINT fk_p2 FOREIGN KEY (mID) REFERENCES manufacturer (mID)";
         stmt.execute(fk_p2);
         String fk_t1 = "ALTER TABLE transaction ADD CONSTRAINT fk_t1 FOREIGN KEY (pID) REFERENCES part (pID)";
         stmt.execute(fk_t1);
         String fk_t2 = "ALTER TABLE transaction ADD CONSTRAINT fk_t2 FOREIGN KEY (sID) REFERENCES salesperson (sID)";
-        stmt.execute(fk_t2);
+        stmt.execute(fk_t2);*/
         System.out.println("Done! Database is initialized!\n");
     }
     catch (SQLException e) 
@@ -145,10 +145,10 @@ public static void Deletetable(Connection con) throws IOException {
     try{
         Statement stmt = con.createStatement();
         //drop foreign key constraint first
-        stmt.execute("ALTER TABLE part DROP FOREIGN KEY fk_p1"); 
+        /*stmt.execute("ALTER TABLE part DROP FOREIGN KEY fk_p1"); 
         stmt.execute("ALTER TABLE part DROP FOREIGN KEY fk_p2");
         stmt.execute("ALTER TABLE transaction DROP FOREIGN KEY fk_t1");
-        stmt.execute("ALTER TABLE transaction DROP FOREIGN KEY fk_t2");
+        stmt.execute("ALTER TABLE transaction DROP FOREIGN KEY fk_t2");*/
         //drop table then
         String Drop = "DROP TABLE category";
         stmt.executeUpdate(Drop);
