@@ -288,7 +288,7 @@ public static void ShowContent(Connection con) throws IOException{
                 }break;
             case "Part":
             case "part":{
-                System.out.println("|  p_ID  |  p_Name  |  p_Price  |  c_ID  |  m_ID  |  p_WarrantyPeriod  |  p_AvailableQuantity  |");
+                System.out.println("|  p_ID  |  p_Name  |  p_Price  |  m_ID  |  c_ID  |  p_WarrantyPeriod  |  p_AvailableQuantity  |");
                 while (resultSet.next()){
                     int pID = resultSet.getInt("pID");
                     String pName = resultSet.getString("pName");
