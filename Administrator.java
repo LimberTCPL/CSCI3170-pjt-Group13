@@ -104,8 +104,8 @@ public static void Createtable(Connection con) throws IOException {
                      + "(pID INTEGER(3) NOT NULL,"
                       + "pName VARCHAR(20) NOT NULL,"
                        + "pPrice INTEGER(20) NOT NULL,"
-                        + "cID INTEGER(1) NOT NULL,"
-                         + "mID INTEGER(1) NOT NULL,"
+                        + "mID INTEGER(1) NOT NULL,"
+                         + "cID INTEGER(1) NOT NULL,"
                           + "pWarrantyPeriod INTEGER(2) NOT NULL,"
                            + "pAvailableQuantity INTEGER(2) NOT NULL,"
                             + "PRIMARY KEY (pID),"
@@ -119,15 +119,14 @@ public static void Createtable(Connection con) throws IOException {
                                  + "PRIMARY KEY (tID),"
                                     + "CHECK (tID > 0)) ";
         stmt.executeUpdate(Transaction);
-        //after created table then add constraint
-        /*String fk_p1 = "ALTER TABLE part ADD CONSTRAINT fk_p1 FOREIGN KEY (cID) REFERENCES category (cID)";
+        String fk_p1 = "ALTER TABLE part ADD CONSTRAINT fk_p1 FOREIGN KEY (cID) REFERENCES category (cID)";
         stmt.execute(fk_p1);
         String fk_p2 = "ALTER TABLE part ADD CONSTRAINT fk_p2 FOREIGN KEY (mID) REFERENCES manufacturer (mID)";
         stmt.execute(fk_p2);
         String fk_t1 = "ALTER TABLE transaction ADD CONSTRAINT fk_t1 FOREIGN KEY (pID) REFERENCES part (pID)";
         stmt.execute(fk_t1);
         String fk_t2 = "ALTER TABLE transaction ADD CONSTRAINT fk_t2 FOREIGN KEY (sID) REFERENCES salesperson (sID)";
-        stmt.execute(fk_t2);*/
+        stmt.execute(fk_t2);
         System.out.println("Done! Database is initialized!\n");
     }
     catch (SQLException e) 
@@ -144,12 +143,10 @@ public static void Createtable(Connection con) throws IOException {
 public static void Deletetable(Connection con) throws IOException {
     try{
         Statement stmt = con.createStatement();
-        //drop foreign key constraint first
-        /*stmt.execute("ALTER TABLE part DROP FOREIGN KEY fk_p1"); 
+        stmt.execute("ALTER TABLE part DROP FOREIGN KEY fk_p1");
         stmt.execute("ALTER TABLE part DROP FOREIGN KEY fk_p2");
         stmt.execute("ALTER TABLE transaction DROP FOREIGN KEY fk_t1");
-        stmt.execute("ALTER TABLE transaction DROP FOREIGN KEY fk_t2");*/
-        //drop table then
+        stmt.execute("ALTER TABLE transaction DROP FOREIGN KEY fk_t2");
         String Drop = "DROP TABLE category";
         stmt.executeUpdate(Drop);
         String Drop2 = "DROP TABLE manufacturer";
@@ -210,8 +207,8 @@ public static void InsertData(Connection con) throws IOException {
         int pid = Integer.parseInt(arrline[0]);
         String pname = arrline[1];
         int pprice = Integer.parseInt(arrline[2]);
-        int cid = Integer.parseInt(arrline[3]);
         int mid = Integer.parseInt(arrline[4]);
+        int cid = Integer.parseInt(arrline[3]);
         int pperiod = Integer.parseInt(arrline[5]);
         int pquantity = Integer.parseInt(arrline[6]);
         String insertp = "INSERT INTO part VALUES" + 
@@ -296,8 +293,8 @@ public static void ShowContent(Connection con) throws IOException{
                     int pID = resultSet.getInt("pID");
                     String pName = resultSet.getString("pName");
                     int pPrice = resultSet.getInt("pPrice");
-                    int cID = resultSet.getInt("cID");
                     int mID = resultSet.getInt("mID");
+                    int cID = resultSet.getInt("cID");
                     int pWarrantyPeriod = resultSet.getInt("pWarrantyPeriod");
                     int pAvailableQuantity = resultSet.getInt("pAvailableQuantity");
                     System.out.println("| " + pID + " | " + pName + " | " + pPrice + " | " + cID + " | " + mID + " | " + pWarrantyPeriod + " | " + pAvailableQuantity + " |");
