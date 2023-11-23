@@ -20,30 +20,39 @@ public class Salesperson {
  //S_Choice_1:Salesperdon move 1   
     
     public static String dbAddress = "jdbc:mysql://projgw.cse.cuhk.edu.hk:2633/db13?autoReconnect=true&useSSL=false";
-    public static String dbUsername = "Group13";
-    public static String dbPassword = "CSCI3170";
+        public static String dbUsername = "Group13";
+        public static String dbPassword = "CSCI3170";
         
         
 
-    public static Connection connectToMySQL() throws IOException{
-        Connection con = null;
-        try{
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                con = DriverManager.getConnection(dbAddress, dbUsername, dbPassword);
-                
-        } catch (ClassNotFoundException e){
-                System.out.println("[Error]: Java MySQL DB Driver not found!!");
-                System.exit(0);
-        } catch (SQLException e){
-                System.out.println(e);
+        public static Connection connectToMySQL() throws IOException{
+                Connection con = null;
+                try{
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                        con = DriverManager.getConnection(dbAddress, dbUsername, dbPassword);
+                        
+                } catch (ClassNotFoundException e){
+                        System.out.println("[Error]: Java MySQL DB Driver not found!!");
+                        System.exit(0);
+                } catch (SQLException e){
+                        System.out.println(e);
+                }
+                return con;
         }
-        return con;
-    }
-        
-    public static void sales(String[] args) throws IOException {
-        Connection conn = connectToMySQL();
-        int input, sale=1;
-        while(sale==1){
+            
+        public static void main(String[] args) {
+            try {
+                Connection conn = connectToMySQL();
+                salesperson_operation(conn);
+            } catch (IOException e) {
+                System.out.println("An error occurred while connecting to the database: " + e.getMessage());
+            } catch (SQLException e) {
+                System.out.println("An SQL error occurred: " + e.getMessage());
+            }
+        }
+
+    public static void salesperson_operation(Connection conn) throws SQLException  {
+        int input;
         System.out.println("\n-----Operations for salesperson menu-----");
         System.out.println("What kind of operation would you like to perform? ");
         System.out.println("1. Search for parts");
@@ -51,7 +60,7 @@ public class Salesperson {
         System.out.println("3. Return to the main menu:");
         Scanner scan = new Scanner(System.in);
         do {
-            System.out.printf("Enter Your Choice: ");
+            System.out.print("Enter Your Choice: ");
             input = scan.nextInt();
         } while (input < 1 || input > 3);
         if (input == 1)
@@ -59,9 +68,9 @@ public class Salesperson {
         else if (input == 2)
             partselling(conn);
         else if (input == 3)
-            mainmenu.main(args);
-        }
+            salesperson_operation(conn);
 
+        scan.close();    
     }
 
     public static void partsearching(Connection conn)   {
@@ -78,13 +87,13 @@ public class Salesperson {
             p_input = scan.nextInt();
         } while (p_input < 1 || p_input > 2);
         scan.nextLine(); // Consume the newline character
-        System.out.printf("Type in the Search Keyword:");
+        System.out.println("Type in the Search Keyword:");
         keyword = scan.nextLine();
         System.out.println("Choose ordering:");
         System.out.println("1. By price, ascending order");
         System.out.println("2. By price, descending order");
         do {
-            System.out.printf("Enter Your Choice: ");
+            System.out.print("Enter Your Choice: ");
             order = scan.nextInt();
         } while (order < 1 || order > 2);
         
@@ -162,8 +171,6 @@ public class Salesperson {
             exp.printStackTrace();
         }
         scan.close();
-        System.out.println("End of Query.\n\n\n");
-        System.out.println("Return to salesperson menu.\n\n\n");
     }
 
 
@@ -171,10 +178,10 @@ public class Salesperson {
         int part_id;
         int sales_id;
 
-        System.out.printf("Enter the part ID:");
+        System.out.println("Enter the part ID:");
         Scanner scan = new Scanner(System.in);
         part_id = scan.nextInt();
-        System.out.printf("Enter the Salesperson ID:");
+        System.out.println("Enter the Salesperson ID:");
         sales_id = scan.nextInt();
 
         try {
@@ -202,6 +209,14 @@ public class Salesperson {
                     PreparedStatement pstmt_sell = conn.prepareStatement(sqlStatement_sell);
                     pstmt_sell.setInt(1, part_id);
                     pstmt_sell.executeUpdate();
+
+                    String sqlStatement_trans= " UPDATE salesperson SET " +
+                    "salesperson.trans = salesperson.trans + 1 " +
+                    "WHERE sID = ? ";
+                    PreparedStatement pstmt_trans = conn.prepareStatement(sqlStatement_trans);
+                    pstmt_trans.setInt(1, sales_id);
+                    pstmt_trans.executeUpdate();
+
                     System.out.println("Product:" + pName + "(id:" + pID + ") Remaining Quality:" + pAvailableQuantity );
                 } else {
                     System.out.println("[Error]: The Part (part_id: " + part_id +") has been sold out!");
@@ -214,8 +229,5 @@ public class Salesperson {
             System.out.println("Error: " + exp);
         }
         scan.close();
-        System.out.println("End of Query.\n\n\n");
-        System.out.println("Return to salesperson menu.\n\n\n");
     }
-
 }
