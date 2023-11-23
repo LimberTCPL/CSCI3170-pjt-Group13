@@ -14,9 +14,7 @@ public class Manager {
     public static String dbUsername = "Group13";
     public static String dbPassword = "CSCI3170";
     
-    
-
-    public static Connection connectToMySQL() throws IOException{
+    public static Connection connectToMySQL(){
             Connection con = null;
             try{
                     Class.forName("com.mysql.cj.jdbc.Driver");
@@ -31,17 +29,17 @@ public class Manager {
             return con;
     }
 
-
-    public static void Manager(String[] args) throws IOException{
+//Manager menu
+    public static void main(String[] args) throws IOException{
         Connection conn = connectToMySQL();
-        System.out.println("-----Operations for manager menu-----");
+        System.out.println("----Operations for manager menu----");
         System.out.println("What kinds of opearion would you like to perform?");
         System.out.println("1. List all salesperson");
         System.out.println("2. Count the no. of sales record of each salesperson under a specific range on years of experience");
         System.out.println("3. Show the total sales value of each manufacturer");
         System.out.println("4. Show the N most popular part");
         System.out.println("5. Return to the main menu");
-        System.out.print("Enter Your Choice: ");
+        System.out.printf("Enter Your Choice: ");
         BufferedReader nochoice = new BufferedReader(new InputStreamReader(System.in));
         int manchoice = Integer.parseInt(nochoice.readLine());
         switch (manchoice) {
@@ -54,7 +52,7 @@ public class Manager {
                 break;
             }
             case 3:{
-                showtotalsales(conn);
+                Showtotalsales(conn);
                 break;
             }
             case 4:{
@@ -68,39 +66,43 @@ public class Manager {
             }
             default:{
                 System.err.println("[Error]: Input Choice invaild!\nPlease Enter again");
+                main(args);
             }
         }
-        }
+}
 
 //fucntion
 public static void Listsalesperson(Connection conn) throws IOException{
     int ordering;
     int listingCount = 0;
+    String order;
     Scanner scan = new Scanner(System.in);
-    System.out.print("Choose ordering:");
+    System.out.println("Choose ordering:");
     System.out.println("1. By ascending order");
     System.out.println("2. By descending order");
     do{
-        System.out.print("Choose the list ordering: ");
+        System.out.println("Choose the list ordering: ");
         ordering = scan.nextInt();;
         } while (ordering < 1 || ordering > 2);
-    Connection con =null;
+    Connection con = connectToMySQL();
     try{
-        String order;
         if(ordering == 1){
             order = "ASC";
         }else{
             order = "DESC";
         }
         Statement stmt = con.createStatement();
-        String tablecontent = "SELECT * FROM Salesperson ORDER BY sExperience" + order;
+        String tablecontent = "SELECT * FROM salesperson ORDER BY sExperience " + order;
         ResultSet resultSet = stmt.executeQuery(tablecontent);
-        //stuck
-        //stuck
-        //stuck
-        
+        System.out.println("| ID  | Name | Mobile Phone | Years of Experience |");
+        while (resultSet.next()) {
+                    int sID = resultSet.getInt("sID");
+                    String sName = resultSet.getString("sName");
+                    int sPhoneNumber = resultSet.getInt("sPhoneNumber");
+                    int sExperience = resultSet.getInt("sExperience");
+                    System.out.println("| " + sID + " | " + sName + " |" + sPhoneNumber + " | " + sExperience + " |");
+                }        
     }
-    
     catch (SQLException e) 
         {
             System.err.println("Fail! Cannot connect to Database!\n");
@@ -141,7 +143,7 @@ public static void Countno(Connection conn) throws IOException{
     /*Get the data in range */
     try{
         Statement stmt = con.createStatement();
-        String countno = "SELECT sID, sName, sExperience, COUNT(tID) AS NumberofTran FROM Salesperson S, Transaction T "
+        String countno = "SELECT S.sID, S.sName, S.sExperience, COUNT(T.tID) AS NumberofTran FROM salesperson S, transaction T "
                 + "WHERE S.sID = T.sID GROUP BY S.sID, sName, sExperience ORDER BY S.sID DESC";
         ResultSet resultset = stmt.executeQuery(countno);
 
@@ -178,18 +180,93 @@ public static void Countno(Connection conn) throws IOException{
     }
     
 
-public static void showtotalsales(Connection conn) throws IOException{
+public static void Showtotalsales(Connection conn) throws IOException{
+    int columns = 10000;
+    try{
+        String sqlStatement = "SELECT COUNT(*) FROM manufacturer";
+        PreparedStatement pstmt = conn.prepareStatement(sqlStatement);
+        ResultSet rs = pstmt.executeQuery();
+        // Move cursor to data
+        rs.next();
+        columns = rs.getInt("count(*)");
+        }
+        catch (Exception ex){
+
+        }
+        String[][] results = new String[columns][4];
+        int returnCount = 0;
+
+        try{
+            String sqlStatement_totalsales = "SELECT m.mID, m.mName, sum(p.pPrice) as TotalSalesValue " +
+                "FROM manufacturer m " +
+                    "JOIN part p ON m.mID = p.mID " +
+                        "GROUP BY m.mID " +
+                            "ORDER BY TotalSalesValue DESC"; 
+            PreparedStatement pstmt_totalsales = conn.prepareStatement(sqlStatement_totalsales);
+            ResultSet rs_totalsales = pstmt_totalsales.executeQuery();
+
+            System.out.println("| manufacturer ID | manufacturer Name | Total Sales Value |");
+            Boolean hasResult = false;
+            while(rs_totalsales.next()){
+                results[returnCount][0] = rs_totalsales.getString("mID");
+                results[returnCount][1] = rs_totalsales.getString("mName");
+                results[returnCount][2] = rs_totalsales.getString("TotalSalesValue");
+                returnCount +=1;
+            }
+            for(int i=0; i<returnCount; i++)
+                System.out.println("| " + results[i][0] + " | " + results[i][1] + " | " + results[i][2] );
+            }
+            catch (Exception exp) {
+                System.out.println("Error: " + exp);
+            }
 
 }
-
 
 public static void Nmostpopular(Connection conn) throws IOException{
-    
-}
-
-
-public static void main(String[] args) throws IOException{
-    manager_operations();
+    int N = 0;
+    int rowCount = 0;
+    Scanner scan = new Scanner(System.in);
+    System.out.print("Type in the number of parts: ");
+    N = scan.nextInt();    
+    try{
+        String sqlStatement = "SELECT COUNT(*) FROM manufacturer";
+        PreparedStatement pstmt = conn.prepareStatement(sqlStatement);
+        ResultSet rs = pstmt.executeQuery();
+        // Move cursor to data
+        rs.next();
+        rowCount = rs.getInt("count(*)");
+    }
+        catch (Exception ex){
+           
+    }
+    String sqlStatement_Nmost;
+    PreparedStatement pstmt_Nmost;
+    String[][] results = new String[rowCount][4];
+    int returnCount = 0;
+    try{
+        sqlStatement_Nmost = "SELECT p.pID, p.pName, COUNT(t.tID) AS Totaltransactions " +
+            "FROM part p " +
+                "JOIN transaction t ON p.pID = t.pID " +
+                    "GROUP BY p.pID, p.pName " +
+                        "ORDER BY Totaltransactions DESC, p.pID DESC " +
+                            "LIMIT ?";
+    pstmt_Nmost = conn.prepareStatement(sqlStatement_Nmost);
+    pstmt_Nmost.setInt(1, N);
+    ResultSet rs_Nmost = pstmt_Nmost.executeQuery();    
+    System.out.println("| Part ID | Part Name | No. of Tranaction |");
+    while(rs_Nmost.next()){
+        results[returnCount][0]= rs_Nmost.getString("pID");
+        results[returnCount][1]= rs_Nmost.getString("pName");
+        results[returnCount][2]= rs_Nmost.getString("Totaltransactions");
+        returnCount += 1;                         
+        }
+    for(int i=0; i<returnCount; i++){
+        System.out.println("| " + results[i][0] + " | " + results[i][1] + " | " + results[i][2] + " | ");
+    }    
+    }            
+    catch (Exception exp) {
+        System.out.println("Error: " + exp);
+    }
 }
 
 
