@@ -7,8 +7,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
-
 public class Manager {
     public static String dbAddress = "jdbc:mysql://projgw.cse.cuhk.edu.hk:2633/db13?autoReconnect=true&useSSL=false";
     public static String dbUsername = "Group13";
@@ -30,8 +28,10 @@ public class Manager {
     }
 
 //Manager menu
-    public static void main(String[] args) throws IOException{
+    public static void manager(String[] args) throws IOException{
         Connection conn = connectToMySQL();
+        int man=1;
+        while(man==1){
         System.out.println("----Operations for manager menu----");
         System.out.println("What kinds of opearion would you like to perform?");
         System.out.println("1. List all salesperson");
@@ -61,14 +61,14 @@ public class Manager {
             }
             case 5:{
                 System.out.println("Enter 6");
-                //call fcn return main menu
+                mainmenu.main(args);
                 break;
             }
             default:{
                 System.err.println("[Error]: Input Choice invaild!\nPlease Enter again");
-                main(args);
+                
             }
-        }
+        }}
 }
 
 //fucntion
@@ -81,7 +81,7 @@ public static void Listsalesperson(Connection conn) throws IOException{
     System.out.println("1. By ascending order");
     System.out.println("2. By descending order");
     do{
-        System.out.println("Choose the list ordering: ");
+        System.out.printf("Choose the list ordering: ");
         ordering = scan.nextInt();;
         } while (ordering < 1 || ordering > 2);
     Connection con = connectToMySQL();
@@ -108,11 +108,7 @@ public static void Listsalesperson(Connection conn) throws IOException{
             System.err.println("Fail! Cannot connect to Database!\n");
             e.printStackTrace();
         }
-            finally {
-            System.out.println("Closing the connection.");
-            if (con != null) try { con.close(); } catch (SQLException ignore) {}
-        }
-        scan.close();
+        System.out.println("Return to manager menu.\n\n\n");
 }
 
 public static void Countno(Connection conn) throws IOException{
@@ -172,11 +168,8 @@ public static void Countno(Connection conn) throws IOException{
             System.err.println("Cannot connect ! ");
             e.printStackTrace();
         }
-    finally {
-            System.out.println("Closing the connection.");
-            if (con != null) try { con.close(); } catch (SQLException ignore) {}
-        }
-        scan.close();
+    System.out.println("End of Query.\n\n\n");
+    System.out.println("Return to manager menu.\n\n\n");
     }
     
 
@@ -219,6 +212,8 @@ public static void Showtotalsales(Connection conn) throws IOException{
             catch (Exception exp) {
                 System.out.println("Error: " + exp);
             }
+    System.out.println("End of Query.\n\n\n");
+    System.out.println("Return to manager menu.\n\n\n");
 
 }
 
@@ -267,8 +262,8 @@ public static void Nmostpopular(Connection conn) throws IOException{
     catch (Exception exp) {
         System.out.println("Error: " + exp);
     }
+    System.out.println("End of Query.\n\n\n");
+    System.out.println("Return to manager menu.\n\n\n");
 }
-
-
 }
 

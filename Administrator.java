@@ -27,8 +27,10 @@ public class Administrator {
             return con;
     }
 //Admin menu
-    public static void main(String[] args) throws IOException {
+    public static void admin(String[] args) throws IOException {
+        int i=1;
         Connection conn = connectToMySQL();
+        while(i==1){
         System.out.println("----Operations for administrator menu----");
         System.out.println("What kinds of operation would you like to perform?");
         System.out.println("1. Create all tables");
@@ -63,15 +65,16 @@ public class Administrator {
                 break;
             }
             case 5:{
-                System.out.println("Enter 6");
+                mainmenu.main(args);
                 //call fcn return main menu
                 break;
             }
             default:{
                 System.err.println("[Error]: Input Choice invaild!\nPlease Enter again");
-                main(args);
+                i=0;
+                admin(args);
             }
-        }
+        }}
 }
 //function
 public static void Createtable(Connection con) throws IOException {
@@ -134,10 +137,7 @@ public static void Createtable(Connection con) throws IOException {
             System.err.println("Fail! Cannot connect to Database!\n");
             e.printStackTrace();
         }
-            finally {
-            System.out.println("Closing the connection.");
-            if (con != null) try { con.close(); } catch (SQLException ignore) {}
-        }
+    System.out.println("Return to Administrator menu.\n\n\n");
 }
 
 public static void Deletetable(Connection con) throws IOException {
@@ -164,10 +164,7 @@ public static void Deletetable(Connection con) throws IOException {
             System.err.println("Fail! Cannot connect to Database!\n");
             e.printStackTrace();
         }
-            finally {
-            System.out.println("Closing the connection.");
-            if (con != null) try { con.close(); } catch (SQLException ignore) {}
-        }
+    System.out.println("Return to administrator menu.\n\n\n");
 }
 
 public static void InsertData(Connection con) throws IOException {
@@ -248,10 +245,7 @@ public static void InsertData(Connection con) throws IOException {
             System.err.println("Cannot connect ! ");
             e.printStackTrace();
         }
-    finally {
-            System.out.println("Closing the connection.");
-            if (con != null) try { con.close(); } catch (SQLException ignore) {}
-        }
+    System.out.println("Return to administrator menu.\n\n\n");
 }
 
 public static void ShowContent(Connection con) throws IOException{
@@ -259,7 +253,6 @@ public static void ShowContent(Connection con) throws IOException{
     BufferedReader ip = new BufferedReader(new InputStreamReader(System.in));
     String tablen = ip.readLine();
     System.out.println("Content of table " + tablen + ":");
-
     try{
         HashMap<Integer, ArrayList<String>> hm = new HashMap<Integer, ArrayList<String>>();
         Statement stmt = con.createStatement();
@@ -336,9 +329,7 @@ public static void ShowContent(Connection con) throws IOException{
             System.err.println("Cannot connect ! ");
             e.printStackTrace();
         }
-    finally {
-            System.out.println("Closing the connection.");
-            if (con != null) try { con.close(); } catch (SQLException ignore) {}
-        }}
+    System.out.println("Return to administrator menu.\n\n\n");
 }
 
+}
