@@ -29,6 +29,6 @@ Chau Pak Lam	1155159999
 1. Copy the java file [JavaSQL.java] and the mysql-jdbc.jar in the same file
 2. connect the code complier to CUHK CSE server via VPN
 3. login in with CSE account 
-4. javac mainnemu.java
+4. complie by javac mainnemu.java
 5. java -classpath ./mysql-jdbc.jar:./ mainnemu
-The program should starts to complie
+The program should starts
