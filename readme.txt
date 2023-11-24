@@ -30,5 +30,5 @@ Chau Pak Lam	1155159999
 2. connect the code complier to CUHK CSE server via VPN
 3. login in with CSE account 
 4. javac mainnemu.java
-5. java mainnemu
+5. java -classpath ./mysql-jdbc.jar:./ mainnemu
 The program should starts to complie
