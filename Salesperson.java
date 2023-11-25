@@ -1,9 +1,9 @@
 //package CSCI3170_tutor.java;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.io.File;
+// import java.io.IOException;
+// import java.sql.Connection;
+// import java.sql.DriverManager;
+// import java.sql.SQLException;
+// import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,9 +18,16 @@ import java.util.Scanner;
 //import java.util.Date;
 
 import java.util.Scanner;
+import java.io.*;
+import java.rmi.ConnectIOException;
+import java.sql.*;
+import java.util.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
-public class sales {
+public class Salesperson {
  //Choice: Main Menu move
  //A_Choice_1:Administrator move 1
  //S_Choice_1:Salesperdon move 1   
@@ -55,20 +62,29 @@ public class sales {
         System.out.println("1. Search for parts");
         System.out.println("2. Sell a part");
         System.out.println("3. Return to the main menu:");
-        Scanner scan = new Scanner(System.in);
-        do {
-            System.out.printf("Enter Your Choice: ");
-            input = scan.nextInt();
-        } while (input < 1 || input > 3);
-        if (input == 1)
-            partsearching(conn);
-        else if (input == 2)
-            partselling(conn);
-        else if (input == 3)
-           // mainmenu.main(args);
-           System.out.println("Hello");
-        }
+        System.out.printf("Enter Your Choice: ");
+        BufferedReader nochoice = new BufferedReader(new InputStreamReader(System.in));
+        int input_s = Integer.parseInt(nochoice.readLine());
+        switch (input_s) {
+            case 1:{
+                partsearching(conn);
+                break;
+            }
+            case 2:{
+                partselling(conn);
+                break;
+            }
+            case 3:{
+                mainmenu.main(args);
+                break;
+            }
+            default:{
+                System.err.println("[Error]: Input Choice invaild!\nPlease Enter again");
+                
+            }
 
+    }
+        }
     }
 
     public static void partsearching(Connection conn)   {
@@ -168,7 +184,7 @@ public class sales {
             System.out.println("[Error]: A matching search record is not found. The input does not exist in the database.");
             exp.printStackTrace();
         }
-        scan.close();
+        //scan.close();
         System.out.println("End of Query.\n\n\n");
         System.out.println("Return to salesperson menu.\n\n\n");
     }
@@ -243,7 +259,7 @@ public class sales {
             System.out.println("Part sell failed to perform!!");
             System.out.println("Error: " + exp);
         }
-        scan.close();
+        //scan.close();
         System.out.println("End of Query.\n\n\n");
         System.out.println("Return to salesperson menu.\n\n\n");
     }
