@@ -46,7 +46,7 @@ public class sales {
         return con;
     }
         
-    public static void main(String[] args) throws IOException {
+    public static void sales(String[] args) throws IOException {
         Connection conn = connectToMySQL();
         int input, sale=1;
         while(sale==1){
