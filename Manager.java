@@ -60,7 +60,6 @@ public class Manager {
                 break;
             }
             case 5:{
-                System.out.println("Enter 6");
                 mainmenu.main(args);
                 break;
             }
