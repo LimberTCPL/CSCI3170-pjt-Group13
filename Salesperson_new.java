@@ -214,6 +214,13 @@ public class Salesperson {
                     pstmt_sell.setInt(1, part_id);
                     pstmt_sell.executeUpdate();
 
+                    String sqlStatement_selectLastID = " SELECT tID FROM transaction ORDER BY tID DESC LIMIT 1 ";
+                    PreparedStatement pstmt_last = conn.prepareStatement(sqlStatement_selectLastID);
+                    ResultSet resultSet = pstmt_last.executeQuery();
+                    resultSet.next();
+                    int lastID = resultSet.getInt("tID");
+                    lastID = lastID + 1;
+
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
                     LocalDate localDate = LocalDate.now();
 
