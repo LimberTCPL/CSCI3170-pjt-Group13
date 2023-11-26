@@ -204,7 +204,7 @@ public class Salesperson {
             String sqlStatement_check = "SELECT  * "+
             "FROM part " +
             "JOIN category "+
-            "ON part.pID= category.cID "+
+            "ON part.cID= category.cID "+
             "JOIN manufacturer " +
             "ON manufacturer.mID = part.mID " +
             "WHERE part.pID=?";
@@ -213,9 +213,9 @@ public class Salesperson {
             pstmt_check.setInt(1, part_id);
 
             ResultSet resultSet = pstmt_check.executeQuery();
-
-            if (resultSet.next()) {
-                int pID = resultSet.getInt("pID");
+           
+            if (resultSet.next() ) {
+                //resultSet.next();
                 String pName = resultSet.getString("pName");
                 int pAvailableQuantity = resultSet.getInt("pAvailableQuantity");
                 if (pAvailableQuantity > 0) {
@@ -247,8 +247,8 @@ public class Salesperson {
                     // pstmt_trans.setInt(3, sales_id);
                     // pstmt_trans.setString(4, "'" + localDate + "'" );
                     pstmt_trans.executeUpdate();
-
-                    System.out.println("Product:" + pName + "(id:" + pID + ") Remaining Quality:" + pAvailableQuantity );
+                    int pA_update=pAvailableQuantity-1;
+                    System.out.println("Product:" + pName + "(id:" + part_id + ") Remaining Quality:" + pA_update );
                 } else {
                     System.out.println("[Error]: The Part (part_id: " + part_id +") has been sold out!");
                 }
