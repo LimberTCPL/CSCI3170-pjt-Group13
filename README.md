@@ -1,6 +1,9 @@
-1. Group 13
+Group 13
 
-2. Poon Hiu Long 1155175955 Tsang Wai Shing 1155159071 Chau Pak Lam 1155159999
+Groupmate
+1. Poon Hiu Long 1155175955
+2. Tsang Wai Shing 1155159071
+3. Chau Pak Lam 1155159999
 
 ### Progress ###
 
