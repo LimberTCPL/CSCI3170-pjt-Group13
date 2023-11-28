@@ -14,16 +14,17 @@ Chau Pak Lam	1155159999
 	- [x] 1.4 Show number of records in each table
 	- [x] 1.5 Return to the main menu
 
-2. Operations for library user menu
-	- [x] 2.1 Search for books
-	- [x] 2.2 Show checkout records of a user
+2. Operations for salesperson menu
+	- [x] 2.1 Search for parts
+	- [x] 2.2 Sell a part
 	- [x] 2.3 Return to the main menu
 
-3. Operations for librarian menu
-	- [x] 3.1 Book Borrowing
-	- [x] 3.2 Book Returning
-	- [x] 3.3 List all un-returned book copies which are checked out within a period
-	- [x] 3.4 Return to the main menu
+3. Operations for manager menu
+	- [x] 3.1 List all salespersons
+	- [x] 3.2 Count the no. of sales record of each salesperson under a specific range on years of experience
+	- [x] 3.3 Show the total sales value of each manufacturer
+	- [x] 3.4 Show the N most popular part
+	- [x] 3.5 Return to the main menu
 
 ### Methods of compilation and execution ###
 1. Copy the java file [JavaSQL.java] and the mysql-jdbc.jar in the same file
