@@ -1,35 +1,33 @@
-1. Group 13
+Group 13
 
-2. 
-Poon Hiu Long	1155175955	
-Tsang Wai Shing	1155159071	
-Chau Pak Lam	1155159999
+Groupmate
+Poon Hiu Long 1155175955
+Tsang Wai Shing 1155159071
+Chau Pak Lam 1155159999
 
-### Progress ###
+Progress
+Operations for administrator menu
+ 1.1 Create all tables
+ 1.2 Delete all tables
+ 1.3 Load data from datafile
+ 1.4 Show records in each table
+ 1.5 Return to the main menu
 
-1. Operations for administrator menu
-	- [x] 1.1 Create all tables
-	- [x] 1.2 Delete all tables
-	- [x] 1.3 Load Data
-	- [x] 1.4 Show number of records in each table
-	- [x] 1.5 Return to the main menu
+Operations for salesperson menu
+ 2.1 Search for parts
+ 2.2 Sell a part
+ 2.3 Return to the main menu
 
-2. Operations for salesperson menu
-	- [x] 2.1 Search for parts
-	- [x] 2.2 Sell a part
-	- [x] 2.3 Return to the main menu
+Operations for manager menu
+ 3.1 List all salespersons
+ 3.2 Count the no. of sales record of each salesperson under a specific range on years of experience
+ 3.3 Show the total sales value of each manufacturer
+ 3.4 Show the N most popular part
+ 3.5 Return to the main menu
 
-3. Operations for manager menu
-	- [x] 3.1 List all salespersons
-	- [x] 3.2 Count the no. of sales record of each salesperson under a specific range on years of experience
-	- [x] 3.3 Show the total sales value of each manufacturer
-	- [x] 3.4 Show the N most popular part
-	- [x] 3.5 Return to the main menu
-
-### Methods of compilation and execution ###
-1. Copy the java file [JavaSQL.java] and the mysql-jdbc.jar in the same file
-2. connect the code complier to CUHK CSE server via VPN
-3. login in with CSE account 
-4. complie by javac mainnemu.java
-5. java -classpath ./mysql-jdbc.jar:./ mainnemu
-The program should starts
+Methods of compilation and execution
+1. Copy all the java file i.e.[mainmenu.java, Administrator.java, Manager.java, Salesperson.java] mysql-jdbc.jar and data folder e.g.[demo_data] in the same file
+2. Connect the code complier to CUHK CSE server via VPN
+3. Login in with CSE account to linux server and cd to programe file
+4. Complie the programe: javac mainmenu.java
+5. Start the programe :java -classpath ./mysql-jdbc.jar:./ mainmenu
