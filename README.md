@@ -23,9 +23,9 @@
 	- [x] 3.4 Return to the main menu
 
 ### Methods of compilation and execution ###
-1. Copy the java file [JavaSQL.java] and the mysql-jdbc.jar in the same file
+1. Copy all the java file i.e.[mainmenu.java, Administrator.java, Manager.java, Salesperson.java] mysql-jdbc.jar and data folder e.g.[demo_data] in the same file
 2. connect the code complier to CUHK CSE server via VPN
-3. login in with CSE account 
-4. javac JavaSQL.java
-5. java JavaSQL
-The program should starts to complie
+3. login in with CSE account to linux server and cd to programe file
+5. complie the programe: javac mainmenu.java
+6. Start the programe :java -classpath ./mysql-jdbc.jar:./ mainmenu
+
