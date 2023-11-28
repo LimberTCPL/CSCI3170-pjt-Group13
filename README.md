@@ -7,8 +7,8 @@
 1. Operations for administrator menu
 	- [x] 1.1 Create all tables
 	- [x] 1.2 Delete all tables
-	- [x] 1.3 Load Data
-	- [x] 1.4 Show number of records in each table
+	- [x] 1.3 Load data from datafile
+	- [x] 1.4 Show records in each table
 	- [x] 1.5 Return to the main menu
 
 2. Operations for library user menu
