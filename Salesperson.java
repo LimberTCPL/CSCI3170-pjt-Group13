@@ -162,6 +162,7 @@ public class Salesperson {
                 pstmt.setString(1, "%" + keyword + "%");
                 ResultSet resultSet = pstmt.executeQuery();
                 boolean hasRecords = false;
+                System.out.println("| ID  | Name | Manufacturer  | Category | Quantity | Warranty | Price ");
                     while (resultSet.next()) {
                         hasRecords = true;
                         int pID = resultSet.getInt("pID");
